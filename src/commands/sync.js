@@ -70,6 +70,7 @@ async function syncUpload(localDir, s3Uri, shouldDelete) {
   const { bucket, key: prefix } = parseS3Uri(s3Uri);
   const normalizedPrefix = prefix && !prefix.endsWith('/') ? prefix + '/' : prefix;
 
+  if (!fs.existsSync(localDir)) throw new Error(`Source directory not found: ${localDir}`);
   const localFiles = listLocalFiles(localDir);
   const s3Objects = await listS3Objects(bucket, normalizedPrefix);
   const toUpload = diffForUpload(localFiles, s3Objects, normalizedPrefix);
@@ -102,6 +103,7 @@ async function syncDownload(s3Uri, localDir, shouldDelete) {
 
   for (const obj of toDownload) {
     const relKey = obj.Key.slice(normalizedPrefix.length);
+    if (!relKey || relKey.endsWith('/')) continue;
     const localPath = path.join(localDir, relKey);
     fs.mkdirSync(path.dirname(localPath), { recursive: true });
     console.log(`download: s3://${bucket}/${obj.Key} -> ${localPath}`);

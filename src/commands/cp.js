@@ -61,7 +61,13 @@ async function download(s3Uri, localPath) {
     },
   });
 
-  await pipeline(resp.Body, tracker, fs.createWriteStream(localPath));
+  try {
+    await pipeline(resp.Body, tracker, fs.createWriteStream(localPath));
+  } catch (err) {
+    bar.stop();
+    try { fs.unlinkSync(localPath); } catch (_) {}
+    throw err;
+  }
   bar.stop();
   console.log(`Downloaded: ${s3Uri} -> ${localPath}`);
 }

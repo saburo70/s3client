@@ -5,7 +5,7 @@ const { parseS3Uri } = require('../utils');
 async function ls(target) {
   if (!target) {
     const resp = await client.send(new ListBucketsCommand({}));
-    for (const b of resp.Buckets) console.log(b.Name);
+    for (const b of (resp.Buckets || [])) console.log(b.Name);
     return;
   }
 
