@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+process.removeAllListeners('warning');
+process.on('warning', (w) => {
+  if (w.name !== 'ExperimentalWarning') process.stderr.write(`${w.name}: ${w.message}\n`);
+});
 const { Command } = require('commander');
 
 const program = new Command();
