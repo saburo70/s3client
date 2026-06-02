@@ -62,7 +62,7 @@ program.parseAsync(process.argv).catch((err) => {
   if (program.opts().debug) {
     console.error(err);
   } else {
-    const msg = err.Code || err.name || 'Error';
+    const msg = err.Code || err.code || err.name || 'Error';
     console.error(`${msg}: ${err.message}`);
   }
   process.exit(1);
