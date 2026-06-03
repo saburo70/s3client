@@ -1,7 +1,7 @@
 {
   "name": "s3-cli",
   "version": "1.0.0",
-  "description": "S3 CLI client for S3 compatible storage",
+  "description": "Client for S3 compatible storage",
   "main": "index.js",
   "bin": {
     "s3": "./index.js"
