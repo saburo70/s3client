@@ -17,15 +17,16 @@ async function mv(src, dst) {
     return;
   }
 
+  let finalDst;
   if (dstIsS3) {
-    await upload(src, dst);
+    finalDst = await upload(src, dst);
     fs.unlinkSync(src);
   } else {
-    await download(src, dst);
+    finalDst = await download(src, dst);
     const { bucket, key } = parseS3Uri(src);
     await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
   }
-  console.log(`Moved: ${src} -> ${dst}`);
+  console.log(`Moved: ${src} -> ${finalDst}`);
 }
 
 // Server-side copy then delete the source (rename within S3).
