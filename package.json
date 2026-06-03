@@ -1,10 +1,10 @@
 {
-  "name": "s3-cli",
+  "name": "@saburro70/s3-cli",
   "version": "1.0.0",
   "description": "Client for S3 compatible storage",
   "main": "index.js",
   "bin": {
-    "s3": "./index.js"
+    "s3": "index.js"
   },
   "scripts": {
     "test": "jest",
@@ -24,6 +24,14 @@
   ],
   "author": "Francesco Agosti",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saburo70/s3client.git"
+  },
+  "homepage": "https://github.com/saburo70/s3client#readme",
+  "bugs": {
+    "url": "https://github.com/saburo70/s3client/issues"
+  },
   "files": [
     "index.js",
     "src/",
