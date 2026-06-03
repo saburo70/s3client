@@ -4,13 +4,14 @@ process.on('warning', (w) => {
   if (w.name !== 'ExperimentalWarning') process.stderr.write(`${w.name}: ${w.message}\n`);
 });
 const { Command } = require('commander');
+const { version } = require('./package.json');
 
 const program = new Command();
 
 program
   .name('s3')
   .description('S3 CLI client for OVH-compatible storage')
-  .version('1.0.0')
+  .version(version)
   .option('--debug', 'show full error stack traces');
 
 program
@@ -27,6 +28,14 @@ program
   .action(async (src, dst) => {
     const cp = require('./src/commands/cp');
     await cp(src, dst);
+  });
+
+program
+  .command('mv <src> <dst>')
+  .description('Move/rename: local <-> s3://, or s3:// -> s3://')
+  .action(async (src, dst) => {
+    const mv = require('./src/commands/mv');
+    await mv(src, dst);
   });
 
 program
