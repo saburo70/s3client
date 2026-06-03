@@ -3,7 +3,7 @@ const path = require('path');
 const { ListObjectsV2Command, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const client = require('../client');
 const { parseS3Uri } = require('../utils');
-const cp = require('./cp');
+const { upload, download } = require('./cp');
 
 function listLocalFiles(dir, base) {
   base = base || dir;
@@ -78,7 +78,7 @@ async function syncUpload(localDir, s3Uri, shouldDelete) {
   for (const file of toUpload) {
     const dstUri = `s3://${bucket}/${normalizedPrefix}${file.key}`;
     console.log(`upload: ${file.fullPath} -> ${dstUri}`);
-    await cp(file.fullPath, dstUri);
+    await upload(file.fullPath, dstUri);
   }
 
   if (shouldDelete) {
@@ -107,7 +107,7 @@ async function syncDownload(s3Uri, localDir, shouldDelete) {
     const localPath = path.join(localDir, relKey);
     fs.mkdirSync(path.dirname(localPath), { recursive: true });
     console.log(`download: s3://${bucket}/${obj.Key} -> ${localPath}`);
-    await cp(`s3://${bucket}/${obj.Key}`, localPath);
+    await download(`s3://${bucket}/${obj.Key}`, localPath);
   }
 
   if (shouldDelete) {

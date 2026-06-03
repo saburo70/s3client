@@ -20,8 +20,10 @@ async function cp(src, dst) {
 
   if (dstIsS3) {
     await upload(src, dst);
+    console.log(`Uploaded: ${src} -> ${dst}`);
   } else {
     await download(src, dst);
+    console.log(`Downloaded: ${src} -> ${dst}`);
   }
 }
 
@@ -39,7 +41,6 @@ async function upload(localPath, s3Uri) {
   upload.on('httpUploadProgress', (progress) => bar.update(progress.loaded));
   await upload.done();
   bar.stop();
-  console.log(`Uploaded: ${localPath} -> ${s3Uri}`);
 }
 
 async function download(s3Uri, localPath) {
@@ -69,7 +70,8 @@ async function download(s3Uri, localPath) {
     throw err;
   }
   bar.stop();
-  console.log(`Downloaded: ${s3Uri} -> ${localPath}`);
 }
 
 module.exports = cp;
+module.exports.upload = upload;
+module.exports.download = download;
