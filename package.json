@@ -1,7 +1,7 @@
 {
   "name": "s3-cli",
   "version": "1.0.0",
-  "description": "S3 CLI client for OVH-compatible storage",
+  "description": "S3 CLI client for S3 compatible storage",
   "main": "index.js",
   "bin": {
     "s3": "./index.js"
@@ -16,9 +16,20 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "s3",
+    "cli",
+    "ovh",
+    "object-storage"
+  ],
+  "author": "Francesco Agosti",
+  "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "commonjs",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1058.0",
